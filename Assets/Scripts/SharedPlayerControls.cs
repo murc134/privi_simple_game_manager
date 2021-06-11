@@ -4,24 +4,6 @@ using UnityEngine;
 
 public class SharedPlayerControls : MonoBehaviour
 {
-    /// <summary>
-    /// Reference to GameManager
-    /// </summary>
-    public GameManager GameManager
-    {
-        protected get
-        {
-            return gameManager;
-        }
-        set
-        {
-            gameManager = value;
-        }
-         
-    }
-
-    [SerializeField]
-    private GameManager gameManager;
     [SerializeField] 
     protected Camera cam;                  // A reference to the main camera in the scenes transform
     // Start is called before the first frame update
@@ -43,9 +25,13 @@ public class SharedPlayerControls : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        cam.enabled = true;
+    }
+
+    private void OnDisable()
+    {
+        cam.enabled = false;
     }
 }
