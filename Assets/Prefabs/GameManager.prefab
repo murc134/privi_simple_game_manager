@@ -43,8 +43,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b02901270381ae4a91a04ca032df265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextControllerNameUI: {fileID: 0}
   PlayerControllerPrefabs:
-  - {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+  - {fileID: 6197305671769127569, guid: b18008d9b6bdbb04d818faead9736fd3, type: 3}
   - {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 3}
-  - {fileID: 11400002, guid: 753ea9ccf9eee6c42a0954ec8663b992, type: 3}
+  lastPosition: {x: 0, y: 1, z: 0}
+  lastRotationEuler: {x: 0, y: 0, z: 0}
   currentControllerIndex: 0
+  maxFallingDist: -5
+  ground: {fileID: 0}

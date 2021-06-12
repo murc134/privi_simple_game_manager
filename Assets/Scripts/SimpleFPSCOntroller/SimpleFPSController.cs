@@ -20,6 +20,7 @@ public class SimpleFPSController : SharedPlayerControls
     [HideInInspector]
     public bool canMove = true;
 
+    [SerializeField]
     Rigidbody body;
 
     protected override void Start()
