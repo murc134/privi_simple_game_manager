@@ -855,7 +855,7 @@ RectTransform:
   m_Children:
   - {fileID: 1906980653}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -916,7 +916,7 @@ Camera:
   field of view: 60
   orthographic: 0
   orthographic size: 5
-  m_Depth: 0
+  m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -1154,7 +1154,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5685236734340444177, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5685236734340444177, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1213,12 +1213,20 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
+      propertyPath: PlayerControllerPrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 6197305671769127569, guid: b18008d9b6bdbb04d818faead9736fd3, type: 3}
+    - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: PlayerControllerPrefabs.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5685236734340444179, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: m_Name
       value: GameManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5685236734340444179, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}

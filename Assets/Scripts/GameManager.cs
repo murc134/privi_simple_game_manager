@@ -244,6 +244,8 @@ public class GameManager : MonoBehaviour
         // Reset to Startup values
         resetLastTransformSettings();
 
+        // Disable Player Controller 
+        // This is done in order to fix the freezing when using the default fps controller
         playerController[currentControllerIndex].enabled = false;
 
         // Set start position to initial value
@@ -252,6 +254,7 @@ public class GameManager : MonoBehaviour
         // Set start rotation to initial value
         playerController[currentControllerIndex].transform.rotation = LastRotation;
 
+        // Reactivate Player Controller in the next frame
         StartCoroutine(enablePC());
     }
 
