@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// The text element that is used to display the next playercontroller
+    /// </summary>
     [SerializeField]
     private Text nextControllerNameUI;
 
@@ -24,6 +27,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField] private Vector3 lastPosition = new Vector3(0, 1, 0);
 
+    /// <summary>
+    /// The initial player spawn position
+    /// </summary>
     private Vector3 positionOnStart;
 
     public Vector3 LastPosition
@@ -43,6 +49,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     [SerializeField] private Vector3 lastRotationEuler = Vector3.zero;
 
+    /// <summary>
+    /// The initial playerspawn rotation
+    /// </summary>
     private Quaternion rotationEulerOnStart;
 
     /// <summary>
@@ -92,8 +101,17 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The maximum distance to the ground before resetting 
+    /// </summary>
     [SerializeField]
     private float maxFallingDist = -5;
+
+    /// <summary>
+    /// A reference to the plattform
+    /// </summary>
+    [SerializeField]
+    private Transform ground;
 
     private void Start()
     {
@@ -111,10 +129,12 @@ public class GameManager : MonoBehaviour
             // Only the first controller will be active
             playerController[i].gameObject.SetActive(i==currentControllerIndex);
 
-            // Reparent transform of PlayerController to this transform
-            playerController[i].transform.SetParent(transform);
-
-
+            // Only if ground is defined
+            if(ground != null)
+            {
+                // Reparent transform of PlayerController to ground
+                playerController[i].transform.SetParent(ground);
+            }
         }
         // Set start position to initial value
         playerController[currentControllerIndex].transform.position = LastPosition;
@@ -128,10 +148,13 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // Handle Fire1 Input and also UI-Button
         if(Input.GetButtonDown("Fire1"))
         {
             NextController();
         }
+
+        // Reset when falling off platform
         if(ActiveController.transform.localPosition.y < maxFallingDist)
         {
             ResetPlayerPositions();
@@ -170,6 +193,9 @@ public class GameManager : MonoBehaviour
         updateNextControllerText();
     }
 
+    /// <summary>
+    /// Updates the text of the Button with the next playercontrollers name
+    /// </summary>
     private void updateNextControllerText()
     {
         if (nextControllerNameUI != null)
@@ -183,6 +209,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Checks if the given index is within the range
+    /// </summary>
+    /// <param name="index">The index that is being checked</param>
+    /// <returns>returns a valid index value</returns>
     private int validateControllerIndex(int index)
     {
         if (index > MaxControllerIndex)
@@ -209,6 +240,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetPlayerPositions()
     {
+        // Reset to Startup values
         resetLastTransformSettings();
 
         // Set start position to initial value
@@ -218,4 +250,5 @@ public class GameManager : MonoBehaviour
         playerController[currentControllerIndex].transform.rotation = LastRotation;
 
     }
+
 }
