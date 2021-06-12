@@ -240,8 +240,11 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void ResetPlayerPositions()
     {
+
         // Reset to Startup values
         resetLastTransformSettings();
+
+        playerController[currentControllerIndex].enabled = false;
 
         // Set start position to initial value
         playerController[currentControllerIndex].transform.position = LastPosition;
@@ -249,6 +252,14 @@ public class GameManager : MonoBehaviour
         // Set start rotation to initial value
         playerController[currentControllerIndex].transform.rotation = LastRotation;
 
+        StartCoroutine(enablePC());
+    }
+
+    // Used to 
+    private IEnumerator enablePC()
+    {
+        yield return new WaitForFixedUpdate();
+        playerController[currentControllerIndex].enabled = true;
     }
 
 }
