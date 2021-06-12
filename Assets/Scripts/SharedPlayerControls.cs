@@ -25,13 +25,4 @@ public class SharedPlayerControls : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        cam.enabled = true;
-    }
-
-    private void OnDisable()
-    {
-        cam.enabled = false;
-    }
 }

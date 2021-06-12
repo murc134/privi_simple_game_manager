@@ -181,8 +181,7 @@ MonoBehaviour:
   walkingSpeed: 7.5
   runningSpeed: 11.5
   jumpSpeed: 8
-  gravity: 20
-  playerCamera: {fileID: 2000000}
+  gravity: 4
   lookSpeed: 2
   lookXLimit: 45
   canMove: 1

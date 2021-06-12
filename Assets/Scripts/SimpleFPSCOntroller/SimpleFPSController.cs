@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -19,13 +20,24 @@ public class SimpleFPSController : SharedPlayerControls
     [HideInInspector]
     public bool canMove = true;
 
-    void Start()
+    Rigidbody body;
+
+    protected override void Start()
     {
+        base.Start();
         characterController = GetComponent<CharacterController>();
+        body = GetComponent<Rigidbody>();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void OnEnable()
+    {
+        // Fix falling through ground issue when switching very fast
+        // 
+        body.velocity = Vector3.zero;
     }
 
     void Update()
@@ -69,4 +81,5 @@ public class SimpleFPSController : SharedPlayerControls
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
         }
     }
+
 }
