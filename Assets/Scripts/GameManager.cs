@@ -1,9 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private Text nextControllerNameUI;
+
     /// <summary>
     /// Prefabs of the player controllers that will be instantiated
     /// </summary>
@@ -18,7 +22,9 @@ public class GameManager : MonoBehaviour
     /// Keeps track of the players position when switching controllers
     /// Will also be the initial spawn position
     /// </summary>
-    private Vector3 lastPosition = new Vector3(0, 1, 0);
+    [SerializeField] private Vector3 lastPosition = new Vector3(0, 1, 0);
+
+    private Vector3 positionOnStart;
 
     public Vector3 LastPosition
     {
@@ -35,7 +41,9 @@ public class GameManager : MonoBehaviour
     /// <summary>
     /// Keeps track of the players rotation in Euler space when switching controllers
     /// </summary>
-    private Vector3 lastRotationEuler = new Vector3(0, 0, 0);
+    [SerializeField] private Vector3 lastRotationEuler = Vector3.zero;
+
+    private Quaternion rotationEulerOnStart;
 
     /// <summary>
     /// Getter and Setter for players euler space rotation when switching controllers
@@ -77,40 +85,45 @@ public class GameManager : MonoBehaviour
         get
         {
             if (MaxControllerIndex <= 0) { return null; }
-            
-            if(currentControllerIndex > MaxControllerIndex)
-            {
-                currentControllerIndex = 0;
-            }
-            else if (currentControllerIndex < 0)
-            {
-                currentControllerIndex = MaxControllerIndex;
-            }
+
+            currentControllerIndex = validateControllerIndex(currentControllerIndex);
 
             return playerController[currentControllerIndex];
         }
     }
 
+    [SerializeField]
+    private float maxFallingDist = -5;
+
     private void Start()
     {
         // First initialize the player controller instance array with the count of available player controller prefabs
         playerController = new SharedPlayerControls[PlayerControllerPrefabs.Length];
-        
+
+        positionOnStart = LastPosition;
+        rotationEulerOnStart = LastRotation;
+
         for (int i=0;i< PlayerControllerPrefabs.Length;i++)
         {
             // First create instances of PlayerController
             playerController[i] = Instantiate<SharedPlayerControls>(PlayerControllerPrefabs[i]);
 
-            // Set start position to initial value
-            playerController[i].transform.position = LastPosition;
-
-            // Set start rotation to initial value
-            playerController[i].transform.rotation = LastRotation;
-
             // Only the first controller will be active
             playerController[i].gameObject.SetActive(i==currentControllerIndex);
-            
+
+            // Reparent transform of PlayerController to this transform
+            playerController[i].transform.SetParent(transform);
+
+
         }
+        // Set start position to initial value
+        playerController[currentControllerIndex].transform.position = LastPosition;
+
+        // Set start rotation to initial value
+        playerController[currentControllerIndex].transform.rotation = LastRotation;
+
+        // Update the text on the button so that is displays the name of the next controller
+        updateNextControllerText();
     }
 
     private void Update()
@@ -118,6 +131,10 @@ public class GameManager : MonoBehaviour
         if(Input.GetButtonDown("Fire1"))
         {
             NextController();
+        }
+        if(ActiveController.transform.localPosition.y < maxFallingDist)
+        {
+            ResetPlayerPositions();
         }
     }
 
@@ -150,5 +167,55 @@ public class GameManager : MonoBehaviour
         ActiveController.transform.position = LastPosition;
         ActiveController.transform.rotation = LastRotation;
         ActiveController.gameObject.SetActive(true);
+        updateNextControllerText();
+    }
+
+    private void updateNextControllerText()
+    {
+        if (nextControllerNameUI != null)
+        {
+            int nextIndex = validateControllerIndex(currentControllerIndex + 1);
+            nextControllerNameUI.text = playerController[nextIndex].GetType().Name;
+        }
+        else
+        {
+            Debug.LogWarning("Cannot display next controller name because Text reference is not set", this);
+        }
+    }
+
+    private int validateControllerIndex(int index)
+    {
+        if (index > MaxControllerIndex)
+        {
+            index = 0;
+        }
+        else if (index < 0)
+        {
+            index = MaxControllerIndex;
+        }
+        return index;
+    }
+    /// <summary>
+    /// Resets the <see cref="LastPosition"/> and <see cref="LastRotation"/> to the default value on Startup
+    /// </summary>
+    private void resetLastTransformSettings()
+    {
+        LastPosition = positionOnStart;
+        LastRotation = rotationEulerOnStart;
+    }
+
+    /// <summary>
+    /// Resets the position and rotation of the player to the default value on Startup
+    /// </summary>
+    public void ResetPlayerPositions()
+    {
+        resetLastTransformSettings();
+
+        // Set start position to initial value
+        playerController[currentControllerIndex].transform.position = LastPosition;
+
+        // Set start rotation to initial value
+        playerController[currentControllerIndex].transform.rotation = LastRotation;
+
     }
 }
