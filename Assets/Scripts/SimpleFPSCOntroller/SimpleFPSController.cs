@@ -43,11 +43,6 @@ public class SimpleFPSController : SharedPlayerControls
 
     void Update()
     {
-        // switch Playercontroller on Fire1 Down
-        if (Input.GetButtonDown("Fire1"))
-        {
-            GameManager.NextController();
-        }
 
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);

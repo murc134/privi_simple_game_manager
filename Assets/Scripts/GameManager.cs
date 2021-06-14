@@ -113,6 +113,11 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private Transform ground;
 
+    /// <summary>
+    /// If true, the fire1 button will be ignored
+    /// </summary>
+    public bool PreventFire1 { get; set; }
+
     private void Start()
     {
         // First initialize the player controller instance array with the count of available player controller prefabs
@@ -151,8 +156,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        // switch Playercontroller on Fire1 Down
+        if (!PreventFire1 && Input.GetButtonDown("Fire1"))
+        {
+            NextController();
+        }
+
         // Reset when falling off platform
-        if(ActiveController.transform.localPosition.y < maxFallingDist)
+        if (ActiveController.transform.localPosition.y < maxFallingDist)
         {
             ResetPlayerPositions();
         }

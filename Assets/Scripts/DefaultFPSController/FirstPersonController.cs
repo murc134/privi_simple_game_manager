@@ -69,12 +69,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
         // Update is called once per frame
         private void Update()
         {
-            // switch Playercontroller on Fire1 Down
-            if (Input.GetButtonDown("Fire1"))
-            {
-                GameManager.NextController();
-            }
-
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
