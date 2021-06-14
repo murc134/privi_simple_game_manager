@@ -978,6 +978,7 @@ GameObject:
   - component: {fileID: 1906980655}
   - component: {fileID: 1906980654}
   - component: {fileID: 1906980657}
+  - component: {fileID: 1906980658}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -1148,6 +1149,19 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+--- !u!114 &1906980658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906980652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8be98b20665a30443aab3c79add2f8a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1866355076}
 --- !u!1001 &5685236734770800719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1226,7 +1240,7 @@ PrefabInstance:
     - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: PlayerControllerPrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 6197305671769127569, guid: b18008d9b6bdbb04d818faead9736fd3, type: 3}
+      objectReference: {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 3}
     - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: PlayerControllerPrefabs.Array.data[4]
       value: 

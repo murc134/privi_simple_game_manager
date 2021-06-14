@@ -167,24 +167,11 @@ public class GameManager : MonoBehaviour
         // First initialize the player controller instance array with the count of available player controller prefabs
         playerController = new SharedPlayerControls[PlayerControllerPrefabs.Length];
 
+        InstantiatePlayerControllerInstance(0);
+
         positionOnStart = LastPosition;
         rotationEulerOnStart = LastRotation;
 
-        for (int i=0;i< PlayerControllerPrefabs.Length;i++)
-        {
-            // First create instances of PlayerController
-            playerController[i] = Instantiate<SharedPlayerControls>(PlayerControllerPrefabs[i]);
-
-            // Only the first controller will be active
-            playerController[i].gameObject.SetActive(i==currentControllerIndex);
-
-            // Only if ground is defined
-            if(ground != null)
-            {
-                // Reparent transform of PlayerController to ground
-                playerController[i].transform.SetParent(ground);
-            }
-        }
         // Set start position to initial value
         playerController[currentControllerIndex].transform.position = LastPosition;
 
@@ -206,6 +193,26 @@ public class GameManager : MonoBehaviour
         {
             ResetPlayerPositions();
         }
+    }
+
+    private void InstantiatePlayerControllerInstance(int i)
+    {
+        if(playerController.Length < i || playerController[i] == null)
+        {
+            // First create instances of PlayerController
+            playerController[i] = Instantiate<SharedPlayerControls>(PlayerControllerPrefabs[i]);
+
+            // Only the first controller will be active
+            playerController[i].gameObject.SetActive(i == currentControllerIndex);
+
+            // Only if ground is defined
+            if (ground != null)
+            {
+                // Reparent transform of PlayerController to ground
+                playerController[i].transform.SetParent(ground);
+            }
+        }
+
     }
 
     /// <summary>
@@ -233,7 +240,8 @@ public class GameManager : MonoBehaviour
         LastPosition = ActiveController.transform.position;
         LastRotation = ActiveController.transform.rotation;
         ActiveController.gameObject.SetActive(false);
-        currentControllerIndex = value;
+        currentControllerIndex = validateControllerIndex(value);
+        InstantiatePlayerControllerInstance(currentControllerIndex);
         ActiveController.transform.position = LastPosition;
         ActiveController.transform.rotation = LastRotation;
         ActiveController.gameObject.SetActive(true);
