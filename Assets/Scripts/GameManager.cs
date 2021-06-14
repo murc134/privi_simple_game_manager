@@ -126,6 +126,9 @@ public class GameManager : MonoBehaviour
             // First create instances of PlayerController
             playerController[i] = Instantiate<SharedPlayerControls>(PlayerControllerPrefabs[i]);
 
+            // Set Game Manager reference
+            playerController[i].GameManager = this;
+
             // Only the first controller will be active
             playerController[i].gameObject.SetActive(i==currentControllerIndex);
 
@@ -148,12 +151,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // Handle Fire1 Input and also UI-Button
-        if(Input.GetButtonDown("Fire1"))
-        {
-            NextController();
-        }
-
         // Reset when falling off platform
         if(ActiveController.transform.localPosition.y < maxFallingDist)
         {

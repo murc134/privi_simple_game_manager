@@ -662,6 +662,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &879340592 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
+  m_PrefabInstance: {fileID: 5685236734770800719}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b02901270381ae4a91a04ca032df265, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1024844352
 GameObject:
   m_ObjectHideFlags: 0
@@ -1036,7 +1047,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1906980655}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 879340592}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: NextController
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1906980655
 MonoBehaviour:
   m_ObjectHideFlags: 0

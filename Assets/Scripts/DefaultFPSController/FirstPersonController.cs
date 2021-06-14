@@ -59,10 +59,22 @@ namespace UnityStandardAssets.Characters.FirstPerson
 			m_MouseLook.Init(transform , cam.transform);
         }
 
+        private void OnEnable()
+        {
+            // Lock cursor
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         // Update is called once per frame
         private void Update()
         {
+            // switch Playercontroller on Fire1 Down
+            if (Input.GetButtonDown("Fire1"))
+            {
+                GameManager.NextController();
+            }
+
             RotateView();
             // the jump state needs to read here to make sure it is not missed
             if (!m_Jump)
@@ -132,7 +144,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             ProgressStepCycle(speed);
             UpdateCameraPosition(speed);
 
-            m_MouseLook.UpdateCursorLock();
         }
 
 

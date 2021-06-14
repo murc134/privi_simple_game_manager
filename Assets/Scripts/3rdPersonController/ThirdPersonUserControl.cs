@@ -20,6 +20,12 @@ namespace UnityStandardAssets.Characters.ThirdPerson
             m_Character = GetComponent<ThirdPersonCharacter>();
         }
 
+        private void OnEnable()
+        {
+            // Lock cursor
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
 
         private void Update()
         {

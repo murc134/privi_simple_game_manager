@@ -6,6 +6,20 @@ public class SharedPlayerControls : MonoBehaviour
 {
     [SerializeField] 
     protected Camera cam;                  // A reference to the main camera in the scenes transform
+
+    private GameManager gameManager;
+
+    public GameManager GameManager
+    {
+        protected get
+        {
+            return gameManager;
+        }
+        set
+        {
+            gameManager = value;
+        }
+    }
     // Start is called before the first frame update
     protected virtual void Start()
     {

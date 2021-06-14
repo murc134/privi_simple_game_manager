@@ -28,10 +28,6 @@ public class SimpleFPSController : SharedPlayerControls
         base.Start();
         characterController = GetComponent<CharacterController>();
         body = GetComponent<Rigidbody>();
-
-        // Lock cursor
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -39,10 +35,20 @@ public class SimpleFPSController : SharedPlayerControls
         // Fix falling through ground issue when switching very fast
         // 
         body.velocity = Vector3.zero;
+
+        // Lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     void Update()
     {
+        // switch Playercontroller on Fire1 Down
+        if (Input.GetButtonDown("Fire1"))
+        {
+            GameManager.NextController();
+        }
+
         // We are grounded, so recalculate move direction based on axes
         Vector3 forward = transform.TransformDirection(Vector3.forward);
         Vector3 right = transform.TransformDirection(Vector3.right);
