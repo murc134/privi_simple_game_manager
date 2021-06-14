@@ -2,14 +2,46 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
+
+//public delegate void SwitchPlayerControllerEvent(string controllername);
+
 public class GameManager : MonoBehaviour
 {
     /// <summary>
-    /// The text element that is used to display the next playercontroller
+    /// Singleton instance of GameManager
     /// </summary>
-    [SerializeField]
-    private Text nextControllerNameUI;
+    private static GameManager instance;
+
+    /// <summary>
+    /// getter for Singleton Instance of GameManager
+    /// </summary>
+    public static GameManager Instance
+    {
+        get
+        {
+            return instance;
+        }
+    }
+
+    /// <summary>
+    /// Event when player controller switches
+    /// </summary>
+    // Could alternatively be either delegate or UnityEvent. In the latter case, it would be possible to assign event via inspector
+    public Action OnSwitchPlayerControllerEvent;
+
+    /// <summary>
+    /// The name of the next player controller
+    /// </summary>
+    public string NextControllerName
+    {
+        get
+        {
+            int nextIndex = validateControllerIndex(currentControllerIndex + 1);
+            return PlayerControllerPrefabs[nextIndex].GetType().Name;
+        }
+    }
 
     /// <summary>
     /// Prefabs of the player controllers that will be instantiated
@@ -118,6 +150,18 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public bool PreventFire1 { get; set; }
 
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else if(instance != this)
+        {
+            Debug.LogError($"There seem to be multiple instances of {GetType().Name} in the scene. Please make sure to only have one instance");
+        }
+    }
+
     private void Start()
     {
         // First initialize the player controller instance array with the count of available player controller prefabs
@@ -130,9 +174,6 @@ public class GameManager : MonoBehaviour
         {
             // First create instances of PlayerController
             playerController[i] = Instantiate<SharedPlayerControls>(PlayerControllerPrefabs[i]);
-
-            // Set Game Manager reference
-            playerController[i].GameManager = this;
 
             // Only the first controller will be active
             playerController[i].gameObject.SetActive(i==currentControllerIndex);
@@ -150,8 +191,6 @@ public class GameManager : MonoBehaviour
         // Set start rotation to initial value
         playerController[currentControllerIndex].transform.rotation = LastRotation;
 
-        // Update the text on the button so that is displays the name of the next controller
-        updateNextControllerText();
     }
 
     private void Update()
@@ -198,23 +237,7 @@ public class GameManager : MonoBehaviour
         ActiveController.transform.position = LastPosition;
         ActiveController.transform.rotation = LastRotation;
         ActiveController.gameObject.SetActive(true);
-        updateNextControllerText();
-    }
-
-    /// <summary>
-    /// Updates the text of the Button with the next playercontrollers name
-    /// </summary>
-    private void updateNextControllerText()
-    {
-        if (nextControllerNameUI != null)
-        {
-            int nextIndex = validateControllerIndex(currentControllerIndex + 1);
-            nextControllerNameUI.text = playerController[nextIndex].GetType().Name;
-        }
-        else
-        {
-            Debug.LogWarning("Cannot display next controller name because Text reference is not set", this);
-        }
+        OnSwitchPlayerControllerEvent.Invoke();
     }
 
     /// <summary>
