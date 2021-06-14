@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -1149,7 +1149,15 @@ PrefabInstance:
     - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: PlayerControllerPrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 5e9e851c0e142814dac026a256ba2ac0, type: 3}
+    - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
+      propertyPath: PlayerControllerPrefabs.Array.data[3]
+      value: 
+      objectReference: {fileID: 6197305671769127569, guid: b18008d9b6bdbb04d818faead9736fd3, type: 3}
+    - target: {fileID: 5685236734340444178, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
+      propertyPath: PlayerControllerPrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 11444856, guid: 7737647c22c1fc64a88d5cd030c352ce, type: 3}
     - target: {fileID: 5685236734340444179, guid: e088dee1b8c0ef04fa29598f136bae16, type: 3}
       propertyPath: m_Name
       value: GameManager
